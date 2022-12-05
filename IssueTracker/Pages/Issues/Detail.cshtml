@@ -1,0 +1,37 @@
+﻿@page "{Id:int}"
+@inject HttpClient _client
+@using Humanizer;
+@using IssueTracker.Extension;
+@model IssueTracker.Pages.Issues.DetailModel
+@{
+}
+
+<div class="mt-5">
+	@if(Model.Issue == null)
+	{
+		<div class="alert alert-warning">
+			Issue Not Found
+		</div>
+	}
+	else
+	{
+		<div>
+			<h3>@Model.Issue.Title</h3>
+			<div class="mb-2">
+				<span class="badge bg-info">@Model.Issue.IssueType</span>
+				<span class="@Model.Issue.Priority.ToCssClass()">@Model.Issue.Priority</span>
+				<span class="badge bg-info">@Model.Issue.Created.Humanize(utcDate:false)</span>
+			</div>
+			<p>@Model.Issue.Description</p>
+		</div>
+		<button class="wt-10 col col-12 btn btn-primary btn-lg" id="buton" onclick="something" >Complete</button>
+	}
+</div>
+<script>
+	function something(){
+		fetch('https://localhost:44391/api/Issues').then((response) => response.json()).then((data) => console.log(data));
+	}
+	document.addEventListener("DOMContentLoaded", function(){
+		document.getElementById("buton").addEventListener("click", something)
+	})
+</script>
