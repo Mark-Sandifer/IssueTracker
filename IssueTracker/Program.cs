@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped(Sp => new HttpClient()
 {
     BaseAddress = new Uri("https://localhost:44391/")
@@ -30,6 +31,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.MapControllers();
 app.MapRazorPages();
 
 app.Run();

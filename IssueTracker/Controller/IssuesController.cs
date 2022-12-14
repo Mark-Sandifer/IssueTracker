@@ -84,11 +84,12 @@ namespace IssueTracker.Controller
             return CreatedAtAction("GetIssue", new { id = issue.Id }, issue);
         }
 
-        [HttpPut("{id}/Complete")]
+        [HttpPut("{issueId}/Complete")]
         public async Task<ActionResult> SetComplete(int issueId)
         {
-            var issue = await _context.Issues.FindAsync(issueId);
-            issue.Completed = DateTime.UtcNow;
+            var issue = _context.Issues.First(issue => issue.Id == issueId);
+
+			issue.Completed = DateTime.UtcNow;
             await _context.SaveChangesAsync();
             return Ok();
         }

@@ -24,12 +24,14 @@
 			</div>
 			<p>@Model.Issue.Description</p>
 		</div>
-		<button class="wt-10 col col-12 btn btn-primary btn-lg" id="buton" onclick="something" >Complete</button>
+		<button class="wt-10 col col-12 btn btn-primary btn-lg" id="buton" >Complete</button>
 	}
 </div>
 <script>
 	function something(){
-		fetch('https://localhost:44391/api/Issues').then((response) => response.json()).then((data) => console.log(data));
+		fetch('https://localhost:44391/api/Issues/@Model.Issue.Id/Complete', {method: 'PUT'})
+		alert('Issue has been resolved')
+		location.href = '/'
 	}
 	document.addEventListener("DOMContentLoaded", function(){
 		document.getElementById("buton").addEventListener("click", something)
