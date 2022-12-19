@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using IssueTracker.Data;
 using IssueTracker.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IssueTracker.Controller
 {

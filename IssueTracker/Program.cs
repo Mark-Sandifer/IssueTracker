@@ -2,8 +2,10 @@ using IssueTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 using static System.Net.WebRequestMethods;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("IssueDbContextConnection") ?? throw new InvalidOperationException("Connection string 'IssueDbContextConnection' not found.");
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -13,7 +15,10 @@ builder.Services.AddScoped(Sp => new HttpClient()
     BaseAddress = new Uri("https://localhost:44391/")
 });
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<IssueDbContext>(Options => Options.UseSqlServer("Data Source=localhost;Initial Catalog=Issues;trusted_connection=true"));
+builder.Services.AddDbContext<IssueDbContext>(Options => Options.UseSqlServer(connectionString));
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<IssueDbContext>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,6 +33,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();;
 
 app.UseAuthorization();
 

@@ -1,10 +1,12 @@
 using IssueTracker.Data;
 using IssueTracker.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace IssueTracker.Pages.Issues
 {
+    [Authorize]
     public class DetailModel : PageModel
     {
         private readonly IssueDbContext _context;
